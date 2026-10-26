@@ -21,7 +21,6 @@
     <div class="topbar-right">
       <span class="records" aria-label="Récords guardados">
         <span title="Mejor nota en la evaluación">🎓 <span id="best-quiz">–</span></span>
-        <span title="Récord en El desafío de Guillermo">⏱ <span id="best-challenge">0</span></span>
       </span>
       <button id="sound-toggle" class="icon-btn" type="button" aria-pressed="true">
         <span aria-hidden="true" id="sound-icon">🔊</span>
@@ -52,9 +51,9 @@
 
       <!-- INICIO -->
       <div class="screen" id="screen-start" data-screen>
-        <p class="demo-badge">Teoría de grafos</p>
+        <p class="demo-badge">Biología</p>
         <h1 class="title">Guillermo<br><span>te pregunta</span></h1>
-        <p class="lead">12 preguntas sobre lo que vimos en la clase: qué es un grafo, vértices, aristas y grado. Al final te llevás una nota orientativa del 1 al 12 y el repaso de los errores.</p>
+        <p class="lead">12 preguntas de biología: 6 del ADN en adelante y 6 de los otros temas (método científico, microscopio, origen de la vida, célula, membrana y seres vivos). Al final te llevás una nota orientativa del 1 al 12 y el repaso de los errores.</p>
         <div class="field">
           <label for="eval-name">Tu nombre (opcional)</label>
           <input id="eval-name" type="text" maxlength="40" autocomplete="off" placeholder="Ej.: Sofía">
@@ -75,8 +74,6 @@
         </fieldset>
         <div class="menu">
           <button class="btn btn-yellow btn-big" type="button" data-action="start-quiz">▶ Jugar</button>
-          <button class="btn btn-teal" type="button" data-action="challenge-intro">⏱ El desafío de Guillermo</button>
-          <button class="btn btn-orange" type="button" data-action="present">📽 Presentar la clase</button>
         </div>
         <div class="ranking" id="ranking-inicio" hidden>
           <h3 class="h3">🏆 Los que menos hicieron enojar a Guillermo</h3>
@@ -87,45 +84,6 @@
           <h3 class="h3">Últimas partidas en este dispositivo</h3>
           <ol class="ready-list" id="eval-history"></ol>
           <button class="btn btn-ghost btn-small" type="button" id="eval-clear" data-action="eval-clear">Borrar historial</button>
-        </div>
-      </div>
-
-      <!-- INSTRUCCIONES -->
-      <div class="screen" id="screen-instructions" data-screen hidden>
-        <h2 class="h2">Cómo se juega</h2>
-        <div class="rules">
-          <div class="rule-card">
-            <h3>▶ Jugar (evaluación)</h3>
-            <ul>
-              <li>Son <strong>12 preguntas</strong> de teoría de grafos, sin repetir.</li>
-              <li>Cada una tiene 4 opciones y <strong>una sola</strong> es correcta.</li>
-              <li>Algunas son <strong>mini retos de grafos</strong>: tocás los vértices o las aristas para seleccionarlos (tocá de nuevo para quitarlos) y recién al apretar <strong>✔ Comprobar</strong> se corrige. Cuentan como una pregunta más.</li>
-              <li>Tenés <strong>3 comodines</strong> para toda la partida: <strong>🛵 Rappi</strong> atropella dos opciones incorrectas, <strong>🎯 Llamar a <span data-nombre-elias>Elías</span></strong> cambia la pregunta por otra sin penalización y <strong>⚡ Llamar a Kamil</strong>, que calma a Guillermo y restaura el panel (ese también está en las prácticas de la clase).</li>
-              <li>Al final sale una <strong>nota del 1 al 12</strong> (se aprueba con 6) y el repaso de lo que fallaste.</li>
-              <li>Atajos: teclas <kbd>1</kbd>–<kbd>4</kbd> para responder y <kbd>Enter</kbd> para seguir. En los mini retos, <kbd>Tab</kbd> recorre los vértices o aristas y <kbd>Enter</kbd> o <kbd>Espacio</kbd> selecciona o quita.</li>
-            </ul>
-          </div>
-          <div class="rule-card">
-            <h3>⏱ El desafío de Guillermo</h3>
-            <ul>
-              <li>Tenés <strong>60 segundos</strong> para decir si cada afirmación sobre grafos es verdadera o falsa.</li>
-              <li>Acierto: <strong>+10</strong>, más +5 por cada acierto seguido (máximo +25).</li>
-              <li>Si te equivocás se corta la racha y Guillermo te muestra la respuesta.</li>
-              <li>Atajos: <kbd>V</kbd> o <kbd>←</kbd> para Verdadero, <kbd>F</kbd> o <kbd>→</kbd> para Falso.</li>
-            </ul>
-          </div>
-          <div class="rule-card">
-            <h3>😠 El enojo de Guillermo</h3>
-            <ul>
-              <li>Cada error lo enoja más y <strong>le arranca un mordisco al panel</strong>. Los dientes de <strong>Paciencia</strong> te muestran cuántos te quedan.</li>
-              <li>Una respuesta correcta lo calma un momento, pero lo que ya mordió no vuelve.</li>
-              <li>Si se le acaba la paciencia, <strong>se come el panel entero</strong> y termina la ronda.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="menu menu-row">
-          <button class="btn btn-yellow" type="button" data-action="start-quiz">▶ Jugar</button>
-          <button class="btn btn-ghost" type="button" data-action="home">← Volver</button>
         </div>
       </div>
 
@@ -141,15 +99,10 @@
         <div class="question-card" id="q-card">
           <div class="rappi-rider" id="rappi-rider" aria-hidden="true" hidden></div>
           <div class="q-meta">
-            <span class="chip" id="q-category">Grafos</span>
+            <span class="chip" id="q-category">Biología</span>
           </div>
           <h2 class="question" id="q-text" tabindex="-1">Pregunta</h2>
           <div class="options" id="q-options" role="group" aria-label="Opciones de respuesta"></div>
-          <div class="reto" id="q-reto" hidden>
-            <div class="graph-canvas reto-canvas" id="reto-canvas"></div>
-            <p class="reto-info" id="reto-info" aria-live="polite"></p>
-            <button class="btn btn-yellow btn-small" type="button" id="reto-check" data-action="reto-check" hidden>✔ Comprobar</button>
-          </div>
         </div>
 
         <div class="feedback" id="q-feedback" hidden>
@@ -223,144 +176,16 @@
         </div>
         <div class="menu menu-row">
           <button class="btn btn-yellow" type="button" data-action="retry-quiz">↻ Jugar de nuevo</button>
-          <button class="btn btn-green" type="button" id="r-back-lesson" data-action="back-class" hidden>◆ Volver a la clase</button>
-          <button class="btn btn-teal" type="button" data-action="challenge-intro">⏱ Ir al desafío</button>
           <button class="btn btn-ghost" type="button" data-action="home">Inicio</button>
         </div>
       </div>
 
-      <!-- DESAFÍO: INTRO -->
-      <div class="screen" id="screen-challenge-intro" data-screen hidden>
-        <p class="demo-badge demo-teal">Minijuego</p>
-        <h2 class="title title-sm">El desafío<br><span>de Guillermo</span></h2>
-        <p class="lead">Verdadero o falso sobre grafos, contrarreloj: tenés <strong>60 segundos</strong>. Cada acierto suma y los aciertos seguidos dan bonus. El reloj arranca solo cuando apretás «Empezar».</p>
-        <p class="lead small">Tu récord: <strong id="c-best-intro">0</strong> puntos</p>
-        <div class="menu menu-row">
-          <button class="btn btn-yellow btn-big" type="button" data-action="start-challenge">▶ Empezar</button>
-          <button class="btn btn-ghost" type="button" data-action="home">← Volver</button>
-        </div>
-      </div>
-
-      <!-- DESAFÍO: JUEGO -->
-      <div class="screen" id="screen-challenge" data-screen hidden>
-        <div class="hud" aria-label="Estado del desafío">
-          <div class="hud-item"><span class="hud-label">Tiempo</span><span class="hud-value" id="c-time">60</span></div>
-          <div class="hud-item"><span class="hud-label">Puntos</span><span class="hud-value" id="c-score">0</span></div>
-          <div class="hud-item"><span class="hud-label">Racha</span><span class="hud-value" id="c-streak">0</span></div>
-        </div>
-        <div class="progress progress-time" aria-hidden="true"><div class="progress-fill" id="c-bar"></div></div>
-
-        <div class="question-card statement-card" id="c-card">
-          <div class="q-meta"><span class="chip chip-teal">¿Verdadero o falso?</span><span class="chip chip-reto">Grafos</span></div>
-          <p class="question" id="c-text">Afirmación</p>
-          <p class="c-flash" id="c-flash" aria-live="assertive"></p>
-        </div>
-
-        <div class="tf-buttons">
-          <button class="btn btn-tf btn-true" type="button" data-action="answer-true"><span aria-hidden="true">✔</span> Verdadero <kbd>V</kbd></button>
-          <button class="btn btn-tf btn-false" type="button" data-action="answer-false"><span aria-hidden="true">✘</span> Falso <kbd>F</kbd></button>
-        </div>
-        <div class="actions">
-          <button class="btn btn-ghost btn-small" type="button" data-action="quit-challenge">Abandonar</button>
-        </div>
-      </div>
-
-      <!-- DESAFÍO: RESULTADO -->
-      <div class="screen" id="screen-challenge-results" data-screen hidden>
-        <h2 class="h2">¡Se terminó el tiempo!</h2>
-        <div class="score-board">
-          <div class="score-box"><span class="hud-label">Puntaje</span><span class="score-big" id="cr-score">0</span></div>
-          <div class="score-box"><span class="hud-label">Aciertos</span><span class="score-big" id="cr-correct">0</span></div>
-          <div class="score-box"><span class="hud-label">Récord</span><span class="score-big" id="cr-best">0</span></div>
-        </div>
-        <p class="record-msg" id="cr-record" hidden>★ ¡Nuevo récord personal! ★</p>
-        <p class="lead small center" id="cr-detail"></p>
-        <div class="menu menu-row">
-          <button class="btn btn-yellow" type="button" data-action="start-challenge">↻ Otra vez</button>
-          <button class="btn btn-violet" type="button" data-action="start-quiz">▶ Jugar</button>
-          <button class="btn btn-ghost" type="button" data-action="home">Inicio</button>
-        </div>
-      </div>
-
-      <!-- CLASE: LISTA DE TEMAS -->
-      <div class="screen" id="screen-learn" data-screen hidden>
-        <p class="demo-badge demo-green">Clase del 26/10/26</p>
-        <h2 class="title title-sm">Teoría<br><span>de grafos</span></h2>
-        <p class="lead">Leé cada tema, jugá con el grafo de ejemplo y después dejá que Guillermo te pregunte para ver si lo entendiste. Al final hay un repaso con todo.</p>
-        <p class="team">Equipo: Velazco · Bueno · Kasmenko</p>
-        <ol class="topic-list" id="topic-list"></ol>
-        <div class="exam-card">
-          <div class="exam-text">
-            <h3 class="h3">¿Estoy listo para dar la clase?</h3>
-            <p>Un examen de 21 preguntas nuevas sobre los 4 temas. Al final Guillermo te dice qué tema tenés pronto y cuál repasar.</p>
-            <p class="exam-best" id="exam-best"></p>
-          </div>
-          <button class="btn btn-yellow btn-big" type="button" data-action="lesson-exam">🎓 Hacer el examen</button>
-        </div>
-        <div class="menu menu-row">
-          <button class="btn btn-violet" type="button" data-action="lesson-review">★ Repaso rápido (10 preguntas)</button>
-          <button class="btn btn-ghost" type="button" data-action="home">← Inicio</button>
-        </div>
-        <p class="note" id="clase-fuente"></p>
-      </div>
-
-      <!-- PRESENTAR LA CLASE: igual que la clase, pero para mostrarla frente a todos -->
-      <div class="screen" id="screen-present" data-screen hidden>
-        <p class="demo-badge demo-orange">Presentación · 26/10/26</p>
-        <h2 class="title title-sm">Teoría<br><span>de grafos</span></h2>
-        <p class="lead">Pasamos los temas en orden, jugamos con el grafo de ejemplo y al final de cada tema Guillermo le pregunta a la clase. Para avanzar o volver se pueden usar las flechas del teclado.</p>
-        <p class="team">Equipo: Velazco · Bueno · Kasmenko</p>
-        <button class="btn btn-yellow btn-big present-start" type="button" data-action="present-start">▶ Empezar la presentación</button>
-        <ol class="topic-list" id="present-list"></ol>
-        <div class="menu menu-row">
-          <button class="btn btn-ghost" type="button" data-action="home">← Inicio</button>
-        </div>
-        <p class="note" id="present-fuente"></p>
-      </div>
-
-      <!-- CLASE: UN TEMA (también se usa al presentar) -->
-      <div class="screen" id="screen-lesson" data-screen hidden>
-        <nav class="lesson-nav" aria-label="Temas de la clase">
-          <button class="btn btn-ghost btn-small" type="button" data-action="back-class">☰ Temas</button>
-          <button class="btn btn-teal btn-small" type="button" data-action="lesson-apuntes" id="lesson-apuntes-btn" aria-expanded="false" aria-controls="lesson-apuntes">📝 Apuntes</button>
-          <span class="lesson-step" id="lesson-step">Tema 1 de 4</span>
-        </nav>
-        <h2 class="h2 lesson-title" id="lesson-title" tabindex="-1">Tema</h2>
-        <p class="sr-only" id="lesson-copy-aviso" aria-live="polite"></p>
-        <section class="apuntes" id="lesson-apuntes" aria-labelledby="apuntes-titulo" hidden>
-          <div class="apuntes-head">
-            <h3 class="h3" id="apuntes-titulo">📝 Apuntes del tema</h3>
-            <button class="btn btn-yellow btn-small" type="button" data-action="apuntes-copy" id="apuntes-copy">📋 Copiar apuntes</button>
-          </div>
-          <ul class="apuntes-lista" id="apuntes-lista"></ul>
-          <figure class="apuntes-dibujo" id="apuntes-dibujo" hidden></figure>
-        </section>
-        <div class="lesson-body" id="lesson-body"></div>
-
-        <figure class="graph-lab" id="graph-lab">
-          <div class="graph-lab-head">
-            <label for="graph-example" class="hud-label">Ejemplo</label>
-            <select id="graph-example"></select>
-            <label class="check"><input type="checkbox" id="graph-degrees"> Mostrar grados</label>
-          </div>
-          <div class="graph-canvas" id="graph-canvas"></div>
-          <figcaption class="graph-info" id="graph-info" aria-live="polite"></figcaption>
-        </figure>
-
-        <aside class="teach-box" id="lesson-teach"></aside>
-
-        <div class="actions">
-          <button class="btn btn-yellow" type="button" data-action="lesson-quiz" id="lesson-quiz-btn">✔ ¿Lo entendí? Preguntame</button>
-          <button class="btn btn-ghost btn-small" type="button" data-action="lesson-prev" id="lesson-prev">◀ Anterior</button>
-          <button class="btn btn-ghost btn-small" type="button" data-action="lesson-next" id="lesson-next">Siguiente ▶</button>
-        </div>
-      </div>
 
     </section>
   </main>
 
   <footer class="footer">
-    <p>Proyecto estudiantil de UTU · Referencia: Rosen, «Matemática discreta y sus aplicaciones», cap. 8</p>
+    <p>Proyecto estudiantil de UTU · Biología</p>
   </footer>
 
   <!-- capa de efectos: Guillermo volando a morder, migas y carteles (no atrapa clics) -->
@@ -375,6 +200,6 @@
   </div>
 
   <script src="comun.js?v=47"></script>
-  <script src="script.js?v=52"></script>
+  <script src="script.js?v=53"></script>
 </body>
 </html>
