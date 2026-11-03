@@ -8,7 +8,8 @@
    PREGUNTAS DE LA EVALUACIÓN (biología)
    Cada partida toma «porGrupo» preguntas al azar de cada grupo
    (ADN y lo que sigue / los otros temas); las que sobran se usan
-   para el comodín «Cambiar pregunta».
+   para el comodín «Cambiar pregunta». Con 15 entran las 30 y no
+   sobra ninguna: entonces el comodín de Elías no aparece.
    Cada pregunta tiene:
      tema        → posición del tema en EVALUACION.temas
      pregunta    → el enunciado
@@ -19,7 +20,7 @@
    Las opciones se mezclan solas en cada partida.
    --------------------------------------------------------- */
 const EVALUACION = {
-  porGrupo: 6,
+  porGrupo: 15,
   // grupo "adn": del ADN en adelante · grupo "otros": el resto de los temas
   temas: [
     { titulo: "ADN", grupo: "adn" },
@@ -1130,6 +1131,7 @@ function startQuiz(lesson = "eval") {
   });
   quiz.deck = shuffle(elegidas).map(prepareQuestion);
   quiz.comodines = { rappi: true, cambio: true, ssj: true }; // el Rescate SSJ está en todos los modos con mordiscos
+  quiz.conCambio = quiz.reserve.length > 0; // sin preguntas de reserva, Elías no tiene con qué cambiar
   clase.partida = lesson === "eval" && clase.sala ? nuevoId() : null;
   clase.mandar("unirse", { nombre: (quiz.alumno || "").replace(/\s+/g, " ").trim().slice(0, 24) || "Sin nombre", personaje: quiz.personaje || null, total: quiz.deck.length });
   rescate.estado = "disponible";
@@ -1142,7 +1144,9 @@ function startQuiz(lesson = "eval") {
   show("quiz", $("#q-text"));
   enojoIniciar(limitePara(quiz.deck.length));
   renderQuestion(lesson === "eval"
-    ? `Arrancamos${quiz.alumno ? ", " + quiz.alumno : ""}! Tenés 3 comodines: Rappi, ${ELIAS.nombre} (cambia la pregunta) y Kamil. Usalos bien.`
+    ? `Arrancamos${quiz.alumno ? ", " + quiz.alumno : ""}! Son ${quiz.deck.length} preguntas. ` + (quiz.conCambio
+      ? `Tenés 3 comodines: Rappi, ${ELIAS.nombre} (cambia la pregunta) y Kamil. Usalos bien.`
+      : "Tenés 2 comodines: Rappi y Kamil. Usalos bien.")
     : pick(FRASES.arranque));
 }
 
@@ -1473,7 +1477,8 @@ function renderLifelines() {
   const evaluacion = quiz.lesson === "eval";
   box.hidden = false;
   renderRescate();
-  $(".elias-comodin").hidden = !evaluacion;
+  $(".elias-comodin").hidden = !evaluacion || !quiz.conCambio;
+  $("#ayuda-elias").hidden = !quiz.conCambio;
   $(".rappi-comodin").hidden = !evaluacion;
   if (!evaluacion) return;
   renderCambio();
